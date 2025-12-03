@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# exit on error
+
 set -o errexit
 
 echo "🔧 Installation des dépendances Composer..."
