@@ -131,11 +131,24 @@ class UserResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Supprimer')
+                    ->modalHeading('Supprimer l\'utilisateur')
+                    ->modalDescription('Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.')
+                    ->modalSubmitActionLabel('Oui, supprimer')
+                    ->modalCancelActionLabel('Annuler')
+                    ->successNotificationTitle('Utilisateur supprimé avec succès'),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('Supprimer la sélection')
+                        ->modalHeading('Supprimer les utilisateurs sélectionnés')
+                        ->modalDescription('Êtes-vous sûr de vouloir supprimer ces utilisateurs ? Cette action est irréversible.')
+                        ->modalSubmitActionLabel('Supprimer')
+                        ->modalCancelActionLabel('Annuler')
+                        ->successNotificationTitle('Utilisateurs supprimés avec succès'),
                 ]),
             ]);
     }

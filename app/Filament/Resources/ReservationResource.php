@@ -119,7 +119,7 @@ class ReservationResource extends Resource
                         Forms\Components\TextInput::make('montant_total')
                             ->label('Montant total')
                             ->numeric()
-                            ->prefix('€')
+                            ->prefix('Ar')
                             ->disabled()
                             ->dehydrated(),
 
@@ -173,7 +173,7 @@ class ReservationResource extends Resource
 
                 Tables\Columns\TextColumn::make('montant_total')
                     ->label('Montant')
-                    ->money('EUR')
+                    ->money('Ariary', true)
                     ->sortable(),
 
                 Tables\Columns\BadgeColumn::make('statut')
@@ -240,11 +240,24 @@ class ReservationResource extends Resource
 
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Supprimer')
+                    ->modalHeading('Supprimer la réservation')
+                    ->modalDescription('Êtes-vous sûr de vouloir supprimer cette réservation ? Cette action est irréversible.')
+                    ->modalSubmitActionLabel('Oui, supprimer')
+                    ->modalCancelActionLabel('Annuler')
+                    ->successNotificationTitle('Salle supprimée avec succès'),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('Supprimer la sélection')
+                        ->modalHeading('Supprimer la réservation sélectionnées')
+                        ->modalDescription('Êtes-vous sûr de vouloir supprimer ces reservation ?')
+                        ->modalSubmitActionLabel('Supprimer')
+                        ->modalCancelActionLabel('Annuler')
+                        ->successNotificationTitle('Réservation supprimées avec succès'),
                 ]),
             ]);
     }

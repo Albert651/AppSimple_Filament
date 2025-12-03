@@ -13,7 +13,15 @@ class ListReservations extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('Nouvelle Reservation')  // ← Ajoutez cette ligne
+                ->icon('heroicon-o-plus'), // ← Et cette ligne (optionnel)
         ];
+    }
+
+    // Titre de la page
+    public function getTitle(): string
+    {
+        return 'Réservations';
     }
 }

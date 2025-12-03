@@ -39,9 +39,8 @@ class StatsOverview extends BaseWidget
                 ->descriptionIcon('heroicon-m-calendar')
                 ->color('primary'),
 
-            Stat::make('Revenu mensuel', number_format($revenuMensuel, 2, ',', ' ') . ' €')
+            Stat::make('Revenu mensuel', number_format($revenuMensuel, 2, ',', ' ') . ' Ar')
                 ->description('Réservations confirmées')
-                ->descriptionIcon('heroicon-m-currency-euro')
                 ->color('success'),
         ];
     }

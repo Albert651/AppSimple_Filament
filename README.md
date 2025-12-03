@@ -1,59 +1,182 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Système de Réservation de Salles
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Application Laravel avec Filament pour la gestion des réservations de salles.
 
-## About Laravel
+## Fonctionnalités
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Gestion des Salles
+- Création, modification et suppression de salles
+- Informations : nom, capacité, tarif horaire, équipements
+- Photo de la salle
+- Statut de disponibilité
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Gestion des Réservations
+- Création de réservations avec calcul automatique du montant
+- Gestion des statuts : En attente, Confirmée, Annulée, Terminée
+- Actions rapides pour confirmer/annuler
+- Filtres par salle, statut et période
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Gestion des Utilisateurs
+- Trois rôles : Administrateur, Gestionnaire, Utilisateur
+- Accès au panel Filament pour admin et gestionnaire
 
-## Learning Laravel
+### Dashboard
+- Statistiques en temps réel
+- Graphique des réservations par mois
+- Liste des dernières réservations
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Prérequis
+- PHP 8.2+
+- Composer
+- MySQL 8.0+ ou MariaDB 10.5+
+- Node.js 18+
 
-## Laravel Sponsors
+### Étapes d'installation
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1. **Cloner le projet**
+```bash
+cd reservation-salle
+```
 
-### Premium Partners
+2. **Installer les dépendances PHP**
+```bash
+composer install
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+3. **Configurer l'environnement**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## Contributing
+4. **Configurer la base de données**
+Modifier le fichier `.env` avec vos identifiants de base de données :
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=reservation_salle
+DB_USERNAME=root
+DB_PASSWORD=votre_mot_de_passe
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+5. **Créer la base de données**
+```bash
+mysql -u root -p -e "CREATE DATABASE reservation_salle CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+```
 
-## Code of Conduct
+6. **Exécuter les migrations et le seeder**
+```bash
+php artisan migrate
+php artisan db:seed
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+7. **Installer les assets de Filament**
+```bash
+php artisan filament:install --panels
+```
 
-## Security Vulnerabilities
+8. **Créer le lien de stockage**
+```bash
+php artisan storage:link
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+9. **Lancer le serveur de développement**
+```bash
+php artisan serve
+```
 
-## License
+## Accès à l'application
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Panel d'administration
+URL : `http://localhost:8000/admin`
+
+### Comptes de test
+
+| Rôle | Email | Mot de passe |
+|------|-------|--------------|
+| Administrateur | admin@example.com | password |
+| Gestionnaire | gestionnaire@example.com | password |
+| Utilisateur | marie@example.com | password |
+
+## Structure du projet
+
+```
+app/
+├── Filament/
+│   ├── Resources/
+│   │   ├── SalleResource.php
+│   │   ├── ReservationResource.php
+│   │   └── UserResource.php
+│   └── Widgets/
+│       ├── StatsOverview.php
+│       ├── ReservationsChart.php
+│       └── LatestReservations.php
+├── Models/
+│   ├── Salle.php
+│   ├── Reservation.php
+│   └── User.php
+└── Providers/
+    └── Filament/
+        └── AdminPanelProvider.php
+
+database/
+├── migrations/
+│   ├── 0001_01_01_000000_create_users_table.php
+│   ├── 2024_01_01_000001_create_salles_table.php
+│   └── 2024_01_01_000002_create_reservations_table.php
+└── seeders/
+    └── DatabaseSeeder.php
+```
+
+## Modèles de données
+
+### Salle
+- `nom` : Nom de la salle
+- `capacite` : Nombre de places
+- `equipements` : Liste des équipements
+- `description` : Description de la salle
+- `tarif_heure` : Tarif horaire en Ariary
+- `disponible` : Statut de disponibilité
+- `image` : Photo de la salle
+
+### Réservation
+- `salle_id` : Référence à la salle
+- `user_id` : Référence à l'utilisateur
+- `date_debut` : Date et heure de début
+- `date_fin` : Date et heure de fin
+- `objet` : Objet de la réservation
+- `nombre_participants` : Nombre de participants
+- `statut` : en_attente, confirmee, annulee, terminee
+- `notes` : Notes supplémentaires
+- `montant_total` : Montant calculé
+
+### User
+- `name` : Nom complet
+- `email` : Adresse email
+- `password` : Mot de passe
+- `telephone` : Numéro de téléphone
+- `role` : admin, gestionnaire, utilisateur
+- `actif` : Statut du compte
+
+## Personnalisation
+
+### Couleurs du thème
+Modifier dans `AdminPanelProvider.php` :
+```php
+->colors([
+    'primary' => Color::Blue,
+    'danger' => Color::Red,
+    // ...
+])
+```
+
+### Ajout d'équipements suggérés
+Modifier dans `SalleResource.php` dans le champ `equipements`.
+
+## Licence
+
+MIT License
+

@@ -13,7 +13,15 @@ class ListUsers extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('Nouveaux Utilisateur')  // ← Ajoutez cette ligne
+                ->icon('heroicon-o-plus'),
         ];
+    }
+
+    // Titre de la page
+     public function getTitle(): string
+    {
+        return 'Utilisateurs';
     }
 }

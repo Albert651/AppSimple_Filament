@@ -51,7 +51,7 @@ class LatestReservations extends BaseWidget
 
                 Tables\Columns\TextColumn::make('montant_total')
                     ->label('Montant')
-                    ->money('EUR'),
+                    ->money('Ariary', true),
             ])
             ->paginated(false);
     }

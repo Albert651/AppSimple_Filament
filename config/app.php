@@ -39,6 +39,8 @@ return [
     |
     */
 
+    'locale' => 'fr',
+    'fallback_locale' => 'fr',
     'debug' => (bool) env('APP_DEBUG', false),
 
     /*
